@@ -15,7 +15,7 @@ public class RepresentanteControlador {
 
     @Autowired
     RepresentanteRepo representanteRepo;
-
+    @CrossOrigin(origins = "**")
     @GetMapping("representante")
     public ResponseEntity<?> findAll() {
         List<Representante> result = representanteRepo.findAll();
@@ -25,17 +25,18 @@ public class RepresentanteControlador {
         return ResponseEntity.ok(result);
     }
 
+    @CrossOrigin(origins = "**")
     @GetMapping("representante/{id}")
     public Representante findById(@PathVariable Long id) {
         return representanteRepo.findById(id).orElseThrow(() -> new RepresentanteNotFoundException(id));
     }
-
+    @CrossOrigin(origins = "http://localhost:8888")
     @PostMapping("representante")
     public ResponseEntity<?> nuevaRepresentante(@RequestBody Representante nuevo) {
             Representante salvada = representanteRepo.save(nuevo);
             return ResponseEntity.status(HttpStatus.CREATED).body(salvada);
     }
-
+    @CrossOrigin(origins = "http://localhost:8888")
     @PutMapping("representante/{id}")
     public Representante editarRepresentante(@RequestBody Representante editar, @PathVariable Long id) {
         if (representanteRepo.existsById(id)) {
@@ -44,7 +45,7 @@ public class RepresentanteControlador {
             return actualizada;
         } else throw new RepresentanteNotFoundException(id);
     }
-
+    @CrossOrigin(origins = "http://localhost:8888")
     @DeleteMapping("representante/{id}")
     public ResponseEntity<?> borrarRepresentante(@PathVariable Long id) {
         if (representanteRepo.existsById(id)) {
@@ -53,4 +54,10 @@ public class RepresentanteControlador {
         } else throw new RepresentanteNotFoundException(id);
     }
 
+    @CrossOrigin(origins = "**")
+    @GetMapping("representante/find{nombre}")
+    public ResponseEntity<?> findByName(@RequestParam String nombre){
+        List<Representante> representantes = representanteRepo.findByNombre(nombre);
+        return ResponseEntity.ok(representantes);
+    }
 }

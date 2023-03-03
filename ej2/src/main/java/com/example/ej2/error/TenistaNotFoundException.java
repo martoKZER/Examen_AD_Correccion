@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class TenistaNotFoundException extends RuntimeException {
     public TenistaNotFoundException(Long id) {
-        super("No se encontro el tenista con el Id: "+id);
+        super("No se encontro el tenista con el Id: " + id);
+    }
+
+    public TenistaNotFoundException(int ranking) {
+        super("No se encontró el tenista con el ranking " + ranking);
     }
 }
